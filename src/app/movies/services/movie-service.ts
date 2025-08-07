@@ -9,6 +9,8 @@ import {
   UpcomingResponse,
 } from '../models/movie.interface';
 
+const STORAGE_KEY = 'language';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -16,12 +18,19 @@ export class MovieService {
   private http: HttpClient = inject(HttpClient);
   private apiKey = environment.tmdbApiKey;
   private baseUrl = environment.tmdbBaseUrl;
+  private language: string = 'en-US';
 
-  constructor() {}
+  constructor() {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const localStorageData = localStorage.getItem(STORAGE_KEY);
+      this.language = localStorageData ?? '';
+    }
+  }
 
   searchMovies(query: MovieSearchQuery): Observable<MovieSearchResponse> {
     let params = new HttpParams()
       .set('api_key', this.apiKey)
+      .set('language', this.language)
       .set('query', query.query);
 
     if (query.page) {
@@ -67,14 +76,13 @@ export class MovieService {
   }
 
   getPopularMovies(page: number = 1) {
-     let params = new HttpParams()
+    let params = new HttpParams()
       .set('api_key', this.apiKey)
+      .set('language', this.language)
       .set('page', page);
 
     return this.http
-      .get<MovieSearchResponse>(
-        `${this.baseUrl}/movie/popular`, { params }
-      )
+      .get<MovieSearchResponse>(`${this.baseUrl}/movie/popular`, { params })
       .pipe(
         map((res) => ({
           ...res,
@@ -91,17 +99,40 @@ export class MovieService {
       );
   }
 
-  getUpcomingMovies(
-    page: number = 1
-  ): Observable<UpcomingResponse> {
+  getPopularMoviesByGenre(genreId: number): Observable<MovieSearchResponse> {
+    return this.http
+      .get<MovieSearchResponse>(`${this.baseUrl}/discover/movie`, {
+        params: {
+          api_key: this.apiKey,
+          sort_by: 'popularity.desc',
+          language: this.language,
+          with_genres: genreId,
+        },
+      })
+      .pipe(
+        map((res) => ({
+          ...res,
+          results: res.results.map((movie) => ({
+            ...movie,
+            poster_full_url: movie.poster_path
+              ? `${environment.tmdbImageBaseUrl}${movie.poster_path}`
+              : null,
+            backdrop_full_url: movie.backdrop_path
+              ? `${environment.tmdbImageBaseUrl}${movie.backdrop_path}`
+              : null,
+          })),
+        }))
+      );
+  }
+
+  getUpcomingMovies(page: number = 1): Observable<UpcomingResponse> {
     let params = new HttpParams()
-      .set('api_key', this.apiKey)
-      .set('page', page);
+    .set('api_key', this.apiKey)
+    .set('language', this.language)
+    .set('page', page);
 
     return this.http
-      .get<UpcomingResponse>(
-        `${this.baseUrl}/movie/upcoming`, { params }
-      )
+      .get<UpcomingResponse>(`${this.baseUrl}/movie/upcoming`, { params })
       .pipe(
         map((res) => ({
           ...res,

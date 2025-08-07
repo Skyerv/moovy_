@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
@@ -15,6 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -33,6 +33,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatCheckbox,
     MatDividerModule,
     MatSnackBarModule,
+    MatMenuModule,
   ],
   exports: [
     MatGridListModule,
@@ -50,6 +51,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatCheckbox,
     MatDividerModule,
     MatSnackBarModule,
+    MatMenuModule,
   ],
 })
 export class MaterialSharedModule {}

@@ -15,4 +15,21 @@
   >
     <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
   </button>
+
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    matTooltip="Choose language"
+  >
+    <mat-icon>language</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="changeLanguage('en-US')">
+      <span>English (en-US)</span>
+    </button>
+    <button mat-menu-item (click)="changeLanguage('pt-BR')">
+      <span>Portuguese (pt-BR)</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>

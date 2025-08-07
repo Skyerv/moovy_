@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import { MaterialSharedModule } from '../../shared/material-shared.module';
 import { Router, RouterModule } from '@angular/router';
 
@@ -10,12 +10,16 @@ import { Router, RouterModule } from '@angular/router';
   imports: [MaterialSharedModule, RouterModule],
 })
 export class NavbarComponent implements OnInit {
-  isDarkMode = false;
+  isDarkMode: boolean = false;
+  currentLang: string = 'en';
 
-  constructor (private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
+      const savedLang = localStorage.getItem('appLang');
+      this.currentLang = savedLang ? savedLang : 'en-US';
+
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'dark') {
         this.enableDarkMode();
@@ -41,6 +45,12 @@ export class NavbarComponent implements OnInit {
     document.body.classList.remove('dark-theme');
     localStorage.setItem('theme', 'light');
     this.isDarkMode = false;
+  }
+
+  changeLanguage(lang: string) {
+    this.currentLang = lang;
+    localStorage.setItem('language', lang);
+    window.location.reload();
   }
 
   goToHomePage(): void {
