@@ -1,0 +1,18 @@
+<mat-toolbar class="navbar">
+  <img class="logo" src="/assets/moovy_logo.png" (click)="goToHomePage()" />
+
+  <nav class="nav-links">
+    <a mat-button routerLink="/home" routerLinkActive="active">Home</a>
+  </nav>
+
+  <span class="spacer"></span>
+
+  <!-- TODO: implement dark/light theme -->
+  <button
+    mat-icon-button
+    (click)="toggleTheme()"
+    [matTooltip]="isDarkMode ? 'Light Mode' : 'Dark Mode'"
+  >
+    <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
+</mat-toolbar>
