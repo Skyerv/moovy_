@@ -1,1 +1,130 @@
-<p>movies-hub works!</p>
+<div class="header-text">
+  <h1>Your movie searching - simplified!</h1>
+  <h3>Search for movies by name, actor, genre, and more.</h3>
+</div>
+
+@if (carouselMovies.length > 0) {
+<div class="carousel">
+  <div class="carousel-track" [style.transform]="getTransform()">
+    @for (movie of carouselMovies; track movie.id; let idx = $index) {
+    <div
+      class="carousel-slide"
+      [style.backgroundImage]="
+              movie.backdrop_path
+                ? 'url(https://image.tmdb.org/t/p/original' + movie.backdrop_path + ')'
+                : 'none'
+            "
+    ></div>
+    }
+  </div>
+</div>
+}
+
+<div class="carousel-overlay"></div>
+
+<div class="movies-search">
+  <mat-form-field class="movies-search__input">
+    <mat-label>Search movie by name or keyword</mat-label>
+    <input
+      matInput
+      type="text"
+      (ngModelChange)="onSearchInput($event)"
+      [ngModel]="''"
+    />
+  </mat-form-field>
+</div>
+
+@if (isLoading) {
+<div class="loader-container" *ngIf="isLoading">
+  <mat-spinner diameter="48" color="primary"></mat-spinner>
+</div>
+} @else {
+<div class="movies-grid">
+  @if (resultMovies.length > 0 && lastSearchTerm.length >= 3) {
+  <h2>Resultados para "{{ lastSearchTerm }}"</h2>
+  <div class="search-movies-grid">
+    @for (movie of resultMovies; track movie.id) {
+    <mat-card appearance="outlined" class="movie-card">
+      <img mat-card-image [src]="movie.poster_full_url" [alt]="movie.title" />
+
+      <mat-card-header>
+        <mat-card-title class="movie-title" matTooltip="{{ movie.title }}">
+          {{ movie.title }}
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{ movie.release_date | date: 'yyyy' }}
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-actions>
+        <span class="rating">
+          <mat-icon>star_border</mat-icon>
+          {{ movie.vote_average | number: '1.1-1' }}
+        </span>
+      </mat-card-actions>
+    </mat-card>
+    }
+  </div>
+  } @else {
+  <div class="genres-movies-grid">
+    @for (genre of movieKeys; track genre) {
+    <h2>{{ genre }}</h2>
+    <div class="genre-slider-wrapper">
+      <button
+        matFab
+        class="nav-button left"
+        color="secondary"
+        (click)="scrollGenre(genre, 'left')"
+      >
+        <mat-icon>arrow_back_ios</mat-icon>
+      </button>
+
+      <div class="genre-row" #genreRowRef [attr.data-genre]="genre">
+        @for (movie of categorizedMovies[genre]; track movie.id) {
+        <mat-card appearance="outlined" class="movie-card">
+          <img
+            mat-card-image
+            [src]="movie.poster_full_url"
+            [alt]="movie.title"
+          />
+          <mat-card-header>
+            <mat-card-title class="movie-title" matTooltip="{{ movie.title }}">
+              {{ movie.title }}
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{ movie.release_date | date: 'yyyy' }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <span class="rating">
+              <mat-icon>star_border</mat-icon>
+              {{ movie.vote_average | number: '1.1-1' }}
+            </span>
+          </mat-card-actions>
+        </mat-card>
+        }
+      </div>
+
+       <button
+        matFab
+        class="nav-button right"
+        color="secondary"
+        (click)="scrollGenre(genre, 'right')"
+      >
+        <mat-icon>arrow_forward_ios</mat-icon>
+      </button>
+    </div>
+    }
+  </div>
+  }
+</div>
+}
+
+<mat-paginator
+  class="paginator"
+  [length]="totalResults"
+  [pageSize]="18"
+  [pageSizeOptions]="[18]"
+  (page)="onPageChange($event)"
+  aria-label="Page selection"
+></mat-paginator>
