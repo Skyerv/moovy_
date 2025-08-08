@@ -16,7 +16,8 @@
     "module": "preserve",
     "baseUrl": "src",
     "paths": {
-      "movies/*": ["app/movies/*"]
+      "movies/*": ["app/movies/*"],
+      "assets/*": ["assets/*"]
     }
   },
   "angularCompilerOptions": {

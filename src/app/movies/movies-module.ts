@@ -12,6 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { MoviesEffects } from './store/movies.effects';
 import { MovieCard } from './components/movie-card/movie-card';
 import { Carousel } from './components/carousel/carousel';
+import { MovieDetailsDialog } from './components/movie-details-dialog/movie-details-dialog';
 
 @NgModule({
   declarations: [MoviesHub],
@@ -25,6 +26,7 @@ import { Carousel } from './components/carousel/carousel';
     BrowserAnimationsModule,
     MovieCard,
     Carousel,
+    MovieDetailsDialog,
   ],
 })
 export class MoviesModule {}

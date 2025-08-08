@@ -7,6 +7,7 @@ import {
   MovieSearchResponse,
   MovieDetails,
   UpcomingResponse,
+  MovieCreditsResponse,
 } from '../models/movie.interface';
 
 const STORAGE_KEY = 'language';
@@ -127,9 +128,9 @@ export class MovieService {
 
   getUpcomingMovies(page: number = 1): Observable<UpcomingResponse> {
     let params = new HttpParams()
-    .set('api_key', this.apiKey)
-    .set('language', this.language)
-    .set('page', page);
+      .set('api_key', this.apiKey)
+      .set('language', this.language)
+      .set('page', page);
 
     return this.http
       .get<UpcomingResponse>(`${this.baseUrl}/movie/upcoming`, { params })
@@ -165,6 +166,16 @@ export class MovieService {
             : null,
         }))
       );
+  }
+
+  getMovieCreditsById(movieId: number): Observable<MovieCreditsResponse> {
+    let params = new HttpParams()
+      .set('api_key', this.apiKey)
+      .set('language', this.language);
+
+    return this.http.get<MovieCreditsResponse>(
+      `${this.baseUrl}/movie/${movieId}/credits`, { params }
+    );
   }
 
   getGuestSessionId() {

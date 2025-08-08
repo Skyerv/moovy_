@@ -89,6 +89,33 @@ export interface MovieSearchResponse {
   total_results: number;
 }
 
+export interface MovieCreditsResponse {
+  id: number;
+  cast: CastMember[];
+  crew: CrewMember[];
+}
+
+export interface CastMember {
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  gender: number | null;
+  id: number;
+  name: string;
+  order: number;
+  profile_path: string | null;
+}
+
+export interface CrewMember {
+  credit_id: string;
+  department: string;
+  gender: number | null;
+  id: number;
+  job: string;
+  name: string;
+  profile_path: string | null;
+}
+
 export interface UpcomingResponse extends MovieSearchResponse {}
 
 export function createNewMovieSearchQuery(): MovieSearchQuery {
