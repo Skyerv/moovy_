@@ -1,9 +1,7 @@
-# Moovy - Movie Explorer App
-
-## Overview
-
+# Moovy 
 Moovy is an Angular-based movie explorer app that lets you browse upcoming movies, popular movies by genre, and search for any movie. It uses The Movie Database (TMDb) API to fetch movie data and offers a smooth, responsive UI.
 
+![alt text](https://github.com/Skyerv/moovy_/blob/master/public/mockup.png?raw=true)
 ---
 
 ## 🚀 How to Run
@@ -11,20 +9,19 @@ Moovy is an Angular-based movie explorer app that lets you browse upcoming movie
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/your-username/moovy.git
+git clone https://github.com/Skyerv/moovy_.git
 cd moovy
 ```
 
-Install dependencies:
+2. Install dependencies:
 ```bash
 npm install
 ```
-Run the development server:
+3. Run the development server:
 ```bash
 npm start
 ```
-Open your browser and navigate to:
-
+4. Open your browser and navigate to:
 ```bash
 http://localhost:4200
 ```
