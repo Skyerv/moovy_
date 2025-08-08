@@ -46,3 +46,35 @@ body {
 .mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--filled {
   border-radius: 8px !important;
 }
+
+.mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
+  stroke: var(--accent0) !important;
+}
+
+.mat-mdc-paginator-navigation-next svg {
+  fill: var(--accent0) !important; 
+}
+
+.mat-mdc-paginator-navigation-previous svg {
+  fill: var(--accent0) !important;
+}
+
+.mat-mdc-paginator-navigation-previous svg {
+  fill: var(--accent0) !important; 
+}
+
+.mat-mdc-paginator-navigation-next svg {
+  fill: var(--accent0) !important;
+}
+
+.mat-mdc-paginator-navigation-first svg {
+  fill: var(--accent0) !important;
+}
+
+.mat-mdc-paginator-navigation-last svg {
+  fill: var(--accent0) !important;
+}
+
+.mat-mdc-select-arrow svg {
+  fill: var(--accent0) !important;
+}

@@ -41,7 +41,10 @@
 } @else {
 <div class="movies-grid">
   @if (resultMovies.length > 0 && lastSearchTerm.length >= 3) {
-  <h2>Resultados para "{{ lastSearchTerm }}"</h2>
+    <div class="movies-grid__header">
+      <h2>Resultados para "{{ lastSearchTerm }}"</h2>
+      <h1>{{ totalResults }} resultados encontrados</h1>
+    </div>
   <div class="search-movies-grid">
     @for (movie of resultMovies; track movie.id) {
     <mat-card appearance="outlined" class="movie-card">
@@ -58,7 +61,7 @@
 
       <mat-card-actions>
         <span class="rating">
-          <mat-icon>star_border</mat-icon>
+          <mat-icon>star</mat-icon>
           {{ movie.vote_average | number: '1.1-1' }}
         </span>
       </mat-card-actions>
@@ -97,7 +100,7 @@
           </mat-card-header>
           <mat-card-actions>
             <span class="rating">
-              <mat-icon>star_border</mat-icon>
+              <mat-icon>star</mat-icon>
               {{ movie.vote_average | number: '1.1-1' }}
             </span>
           </mat-card-actions>
@@ -105,7 +108,7 @@
         }
       </div>
 
-       <button
+      <button
         matFab
         class="nav-button right"
         color="secondary"
@@ -122,9 +125,10 @@
 
 <mat-paginator
   class="paginator"
+  [ngClass]="{ 'hidden-visibility': resultMovies.length <= 0 && lastSearchTerm.length < 3 }"
   [length]="totalResults"
-  [pageSize]="18"
-  [pageSizeOptions]="[18]"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
   (page)="onPageChange($event)"
   aria-label="Page selection"
 ></mat-paginator>

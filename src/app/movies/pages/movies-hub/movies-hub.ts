@@ -13,6 +13,7 @@ import {
   Subscription,
   debounceTime,
   distinctUntilChanged,
+  forkJoin,
 } from 'rxjs';
 import {
   MovieSearchQuery,
@@ -21,9 +22,7 @@ import {
 } from '../../models/movie.interface';
 import { MovieService } from '../../services/movie-service';
 import { select, Store } from '@ngrx/store';
-import {
-  selectUpcomingMovies,
-} from '../../store/movies.selectors';
+import { selectUpcomingMovies } from '../../store/movies.selectors';
 import { loadMovies, loadUpcomingMovies } from '../../store/movies.actions';
 
 @Component({
@@ -41,6 +40,10 @@ export class MoviesHub {
   searchQuery: MovieSearchQuery = createNewMovieSearchQuery();
   totalResults = 0;
   isLoading: boolean = false;
+
+  pageIndex: number = 0;
+  pageSize: number | undefined = 24;
+  pageSizeOptions: number[] = [6, 12, 18, 24];
 
   popularMovies!: Movie[];
   upcomingMovies!: Movie[];
@@ -113,26 +116,68 @@ export class MoviesHub {
   }
 
   onPageChange(event: PageEvent): void {
-    this.searchQuery.page = event.pageIndex + 1;
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    //this.searchQuery.page = event.pageIndex + 1;
+
     this.searchMovies();
   }
 
   searchMovies(): void {
     this.isLoading = true;
 
-    this.movieService.searchMovies(this.searchQuery).subscribe({
-      next: (response) => {
-        this.resultMovies = response.results;
-        this.totalResults = response.total_results;
+    const tmdbPageSize = 20;
+    const pagesNeeded = Math.ceil(this.pageSize! / tmdbPageSize);
+
+    const startPage =
+      this.pageIndex * Math.ceil(this.pageSize! / tmdbPageSize) + 1;
+
+    let allResults: Movie[] = [];
+
+    let requests: Observable<any>[] = [];
+    for (let i = 0; i < pagesNeeded; i++) {
+      requests.push(
+        this.movieService.searchMovies({
+          query: this.searchQuery.query,
+          page: startPage + i,
+        })
+      );
+    }
+
+    forkJoin(requests).subscribe({
+      next: (responses) => {
+        responses.forEach((res) => {
+          allResults = allResults.concat(res.results);
+          this.totalResults = res.total_results;
+        });
+
+        this.resultMovies = allResults.slice(0, this.pageSize);
         this.isLoading = false;
         this.cdr.detectChanges();
       },
       error: (error) => {
         this.isLoading = false;
-        console.log(error);
+        console.error(error);
       },
     });
   }
+
+  // searchMovies(): void {
+  //   this.isLoading = true;
+
+  //   this.movieService.searchMovies(this.searchQuery).subscribe({
+  //     next: (response) => {
+  //       this.resultMovies = response.results;
+  //       this.totalResults = response.total_results;
+  //       this.isLoading = false;
+  //       this.cdr.detectChanges();
+  //     },
+  //     error: (error) => {
+  //       this.isLoading = false;
+  //       console.log(error);
+  //     },
+  //   });
+  // }
 
   startAutoSlide() {
     clearInterval(this.intervalId);
