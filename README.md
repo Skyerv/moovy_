@@ -9,7 +9,7 @@ Moovy is an Angular-based movie explorer app that lets you browse upcoming movie
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/your-username/moovy.git
+git clone https://github.com/Skyerv/moovy_.git
 cd moovy
 ```
 
