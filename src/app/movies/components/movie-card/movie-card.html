@@ -1,0 +1,19 @@
+<mat-card appearance="outlined" class="movie-card">
+  <img mat-card-image [src]="movie.poster_full_url" [alt]="movie.title" />
+
+  <mat-card-header>
+    <mat-card-title class="movie-title" matTooltip="{{ movie.title }}">
+      {{ movie.title }}
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{ movie.release_date | date: 'yyyy' }}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-actions>
+    <span class="rating">
+      <mat-icon>star</mat-icon>
+      {{ movie.vote_average | number: '1.1-1' }}
+    </span>
+  </mat-card-actions>
+</mat-card>

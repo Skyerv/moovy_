@@ -10,6 +10,7 @@ import { moviesReducer } from './store/movies.reducer';
 import { MoviesRoutingModule } from './movies-routing.module';
 import { EffectsModule } from '@ngrx/effects';
 import { MoviesEffects } from './store/movies.effects';
+import { MovieCard } from './components/movie-card/movie-card';
 
 @NgModule({
   declarations: [MoviesHub],
@@ -21,6 +22,7 @@ import { MoviesEffects } from './store/movies.effects';
     EffectsModule.forRoot([MoviesEffects]),
     MaterialSharedModule,
     BrowserAnimationsModule,
+    MovieCard,
   ],
 })
 export class MoviesModule {}
