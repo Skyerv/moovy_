@@ -199,6 +199,8 @@ export class MoviesHub {
         const validMovies = this.upcomingMovies.filter((m) => m.backdrop_path);
 
         this.carouselMovies = validMovies;
+
+        this.cdr.markForCheck();
       });
   }
 

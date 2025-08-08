@@ -6,10 +6,28 @@ const routes: Routes = [
   {
     path: '',
     component: MoviesHub,
+    children: [
+      {
+        path: 'movies/:id/details',
+        loadComponent: () =>
+          import(
+            'movies/components/movie-details-dialog/movie-details-dialog'
+          ).then((m) => m.MovieDetailsDialog),
+      },
+    ],
   },
   {
     path: 'movies',
     component: MoviesHub,
+    children: [
+      {
+        path: 'movies/:id/details',
+        loadComponent: () =>
+          import(
+            'movies/components/movie-details-dialog/movie-details-dialog'
+          ).then((m) => m.MovieDetailsDialog),
+      },
+    ],
   },
 ];
 
