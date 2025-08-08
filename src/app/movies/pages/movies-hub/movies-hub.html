@@ -35,37 +35,19 @@
 </div>
 
 @if (isLoading) {
-<div class="loader-container" *ngIf="isLoading">
+<div class="loader-container">
   <mat-spinner diameter="48" color="primary"></mat-spinner>
 </div>
 } @else {
 <div class="movies-grid">
   @if (resultMovies.length > 0 && lastSearchTerm.length >= 3) {
-    <div class="movies-grid__header">
-      <h2>Resultados para "{{ lastSearchTerm }}"</h2>
-      <h1>{{ totalResults }} resultados encontrados</h1>
-    </div>
+  <div class="movies-grid__header">
+    <h2>Resultados para "{{ lastSearchTerm }}"</h2>
+    <h1>{{ totalResults }} resultados encontrados</h1>
+  </div>
   <div class="search-movies-grid">
     @for (movie of resultMovies; track movie.id) {
-    <mat-card appearance="outlined" class="movie-card">
-      <img mat-card-image [src]="movie.poster_full_url" [alt]="movie.title" />
-
-      <mat-card-header>
-        <mat-card-title class="movie-title" matTooltip="{{ movie.title }}">
-          {{ movie.title }}
-        </mat-card-title>
-        <mat-card-subtitle>
-          {{ movie.release_date | date: 'yyyy' }}
-        </mat-card-subtitle>
-      </mat-card-header>
-
-      <mat-card-actions>
-        <span class="rating">
-          <mat-icon>star</mat-icon>
-          {{ movie.vote_average | number: '1.1-1' }}
-        </span>
-      </mat-card-actions>
-    </mat-card>
+    <app-movie-card [movie]="movie"></app-movie-card>
     }
   </div>
   } @else {
@@ -84,27 +66,7 @@
 
       <div class="genre-row" #genreRowRef [attr.data-genre]="genre">
         @for (movie of categorizedMovies[genre]; track movie.id) {
-        <mat-card appearance="outlined" class="movie-card">
-          <img
-            mat-card-image
-            [src]="movie.poster_full_url"
-            [alt]="movie.title"
-          />
-          <mat-card-header>
-            <mat-card-title class="movie-title" matTooltip="{{ movie.title }}">
-              {{ movie.title }}
-            </mat-card-title>
-            <mat-card-subtitle>
-              {{ movie.release_date | date: 'yyyy' }}
-            </mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-actions>
-            <span class="rating">
-              <mat-icon>star</mat-icon>
-              {{ movie.vote_average | number: '1.1-1' }}
-            </span>
-          </mat-card-actions>
-        </mat-card>
+        <app-movie-card [movie]="movie"></app-movie-card>
         }
       </div>
 
