@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import {
+  Observable,
   Subject,
   Subscription,
   debounceTime,
@@ -19,6 +20,11 @@ import {
   Movie,
 } from '../../models/movie.interface';
 import { MovieService } from '../../services/movie-service';
+import { select, Store } from '@ngrx/store';
+import {
+  selectUpcomingMovies,
+} from '../../store/movies.selectors';
+import { loadMovies, loadUpcomingMovies } from '../../store/movies.actions';
 
 @Component({
   selector: 'app-movies-hub',
@@ -42,6 +48,10 @@ export class MoviesHub {
   resultMovies: Movie[] = [];
   categorizedMovies: { [genre: string]: Movie[] } = {};
 
+  upcomingMovies$!: Observable<Movie[]>;
+  loading$!: Observable<boolean>;
+  error$!: Observable<string | null>;
+
   readonly GENRES: { [name: string]: number } = {
     Action: 28,
     Comedy: 35,
@@ -60,11 +70,17 @@ export class MoviesHub {
 
   private sub!: Subscription;
   movieKeys: string[] = [];
+  movieSubscription!: Subscription;
 
   constructor(
     private movieService: MovieService,
-    private cdr: ChangeDetectorRef
-  ) {}
+    private cdr: ChangeDetectorRef,
+    private store: Store
+  ) {
+    this.upcomingMovies$ = this.store.select(selectUpcomingMovies);
+    // this.loading$ = this.store.select(selectLoading);
+    // this.error$ = this.store.select(selectError);
+  }
 
   ngOnInit(): void {
     this.getUpcomingMovies();
@@ -161,35 +177,38 @@ export class MoviesHub {
   }
 
   getUpcomingMovies(): void {
-    this.movieService.getPopularMovies().subscribe((response) => {
-      if (!this.upcomingMovies) {
-        this.upcomingMovies = response.results;
-      }
-      console.log(this.upcomingMovies);
-      const validMovies = this.upcomingMovies.filter((m) => m.backdrop_path);
+    this.store.dispatch(loadUpcomingMovies());
 
-      this.carouselMovies = validMovies;
-      this.currentSlide = 0;
+    this.movieSubscription = this.store
+      .select(selectUpcomingMovies)
+      .subscribe((movies) => {
+        if (!movies || movies.length === 0) return;
 
-      clearInterval(this.intervalId);
+        this.upcomingMovies = movies;
+        const validMovies = this.upcomingMovies.filter((m) => m.backdrop_path);
 
-      if (this.carouselMovies.length > 1) {
-        this.startAutoSlide();
-      }
-    });
+        this.carouselMovies = validMovies;
+        this.currentSlide = 0;
+
+        clearInterval(this.intervalId);
+
+        if (this.carouselMovies.length > 1) {
+          this.startAutoSlide();
+        }
+      });
   }
 
   scrollGenre(genre: string, direction: 'left' | 'right') {
-  const rowElement = this.genreRows.find(
-    (el) => el.nativeElement.dataset.genre === genre
-  );
+    const rowElement = this.genreRows.find(
+      (el) => el.nativeElement.dataset.genre === genre
+    );
 
-  if (rowElement) {
-    const scrollAmount = 300;
-    rowElement.nativeElement.scrollBy({
-      left: direction === 'left' ? -scrollAmount : scrollAmount,
-      behavior: 'smooth',
-    });
+    if (rowElement) {
+      const scrollAmount = 300;
+      rowElement.nativeElement.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth',
+      });
+    }
   }
-}
 }
