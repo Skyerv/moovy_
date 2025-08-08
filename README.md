@@ -13,16 +13,15 @@ git clone https://github.com/your-username/moovy.git
 cd moovy
 ```
 
-Install dependencies:
+2. Install dependencies:
 ```bash
 npm install
 ```
-Run the development server:
+3. Run the development server:
 ```bash
 npm start
 ```
-Open your browser and navigate to:
-
+4. Open your browser and navigate to:
 ```bash
 http://localhost:4200
 ```
