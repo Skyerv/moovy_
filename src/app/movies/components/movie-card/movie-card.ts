@@ -21,18 +21,6 @@ export class MovieCard {
   constructor(private dialog: MatDialog, private router: Router) {}
 
   openMovieDialog(movieId: number, viaRoute = false): void {
-    // I had to take out the logic of making the dialog open in
-    // a new route because it was causing an error that I could
-    // not figure out.
-
-    // Maybe if I put the movies into a NgRx Store it would help,
-    // I'll check this later.
-
-    // If you want to see the routing logic working,
-    // just un-comment the code lines below.
-
-    // The routing logic will work, but some other stuff will break.
-
     setTimeout(() => {
       if (!viaRoute) {
         this.router.navigate(['/movies', movieId, 'details']);
