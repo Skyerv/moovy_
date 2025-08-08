@@ -85,7 +85,9 @@ export class MoviesHub {
     // this.error$ = this.store.select(selectError);
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
     this.getUpcomingMovies();
     this.loadCategorizedPopularMovies();
 
@@ -105,9 +107,7 @@ export class MoviesHub {
           this.loadCategorizedPopularMovies();
         }
       });
-  }
 
-  ngAfterViewInit(): void {
     this.cdr.detectChanges();
   }
 
@@ -153,7 +153,6 @@ export class MoviesHub {
 
         this.resultMovies = allResults.slice(0, this.pageSize);
         this.isLoading = false;
-        this.cdr.detectChanges();
       },
       error: (error) => {
         this.isLoading = false;
@@ -162,43 +161,9 @@ export class MoviesHub {
     });
   }
 
-  // searchMovies(): void {
-  //   this.isLoading = true;
-
-  //   this.movieService.searchMovies(this.searchQuery).subscribe({
-  //     next: (response) => {
-  //       this.resultMovies = response.results;
-  //       this.totalResults = response.total_results;
-  //       this.isLoading = false;
-  //       this.cdr.detectChanges();
-  //     },
-  //     error: (error) => {
-  //       this.isLoading = false;
-  //       console.log(error);
-  //     },
-  //   });
-  // }
-
-  startAutoSlide() {
-    clearInterval(this.intervalId);
-
-    this.intervalId = setInterval(() => {
-      if (this.carouselMovies.length > 1) {
-        this.currentSlide =
-          (this.currentSlide + 1) % this.carouselMovies.length;
-      }
-      this.cdr.detectChanges();
-    }, 5000);
-  }
-
   getTransform(): string {
     return `translateX(-${this.currentSlide * 100}%)`;
   }
-
-  // ngOnDestroy(): void {
-  //   this.sub.unsubscribe();
-  //   clearInterval(this.intervalId);
-  // }
 
   getPopularMovies(): void {
     this.movieService.getPopularMovies().subscribe((response) => {
@@ -214,6 +179,7 @@ export class MoviesHub {
         next: (response) => {
           this.categorizedMovies[genreName] = response.results.slice(0, 10);
           this.movieKeys = Object.keys(this.categorizedMovies);
+          this.cdr.detectChanges();
         },
         error: (err) =>
           console.error(`Error loading ${genreName} movies.`, err),
@@ -233,13 +199,6 @@ export class MoviesHub {
         const validMovies = this.upcomingMovies.filter((m) => m.backdrop_path);
 
         this.carouselMovies = validMovies;
-        this.currentSlide = 0;
-
-        clearInterval(this.intervalId);
-
-        if (this.carouselMovies.length > 1) {
-          this.startAutoSlide();
-        }
       });
   }
 
