@@ -1,59 +1,69 @@
-# Moovy
+# Moovy - Movie Explorer App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.3.
+## Overview
 
-## Development server
+Moovy is an Angular-based movie explorer app that lets you browse upcoming movies, popular movies by genre, and search for any movie. It uses The Movie Database (TMDb) API to fetch movie data and offers a smooth, responsive UI.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## 🚀 How to Run
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1. Clone this repository:
 
 ```bash
-ng generate component component-name
+git clone https://github.com/your-username/moovy.git
+cd moovy
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Install dependencies:
+```bash
+npm install
+```
+Run the development server:
+```bash
+npm start
+```
+Open your browser and navigate to:
 
 ```bash
-ng generate --help
+http://localhost:4200
 ```
 
-## Building
+## 🎯 Features
+### Upcoming Movies
+Browse a carousel of movies coming soon.
 
-To build the project run:
+### Popular Movies by Genre
+Explore popular movies grouped by genres like Action, Comedy, Drama, Sci-fi, and Horror.
 
-```bash
-ng build
-```
+### Movie Search
+Search for any movie by typing a title (minimum 3 characters). Results update with pagination support.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Movie Details
+View detailed info and cast of a selected movie via a dialog.
 
-## Running unit tests
+## ⚙️ Technical Details
+### State Management
+Uses NgRx Store and Effects for managing app state and side effects like API calls.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Lazy Loading
+Routes and components are lazy-loaded to optimize initial load time.
 
-```bash
-ng test
-```
+### Routing
+Angular Router handles navigation, including nested routes for movie details.
 
-## Running end-to-end tests
+### Global Variables
+Centralized global variables (e.g., genre IDs, API endpoints) are stored in a dedicated config file for easy maintenance.
 
-For end-to-end (e2e) testing, run:
+### Responsive Design
+Media queries and Angular Material responsive layout ensure the app looks great on all screen sizes.
 
-```bash
-ng e2e
-```
+### Standalone Components
+Some components use Angular’s standalone component API for modularity and simplicity.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📚 Technologies Used
+- Angular 20+
+- Angular Material
+- NgRx (Store, Effects)
+- RxJS
+- TMDb API
