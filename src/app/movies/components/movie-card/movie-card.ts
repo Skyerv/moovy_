@@ -6,6 +6,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Movie } from 'movies/models/movie.interface';
 import { MovieDetailsDialog } from '../movie-details-dialog/movie-details-dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-card',
@@ -17,7 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class MovieCard {
   @Input() movie!: Movie;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private router: Router) {}
 
   openMovieDialog(movieId: number, viaRoute = false): void {
     // I had to take out the logic of making the dialog open in
@@ -34,7 +35,7 @@ export class MovieCard {
 
     setTimeout(() => {
       if (!viaRoute) {
-        //this.router.navigate(['/movies', movieId, 'details']);
+        this.router.navigate(['/movies', movieId, 'details']);
       }
     }, 300);
 
@@ -46,7 +47,7 @@ export class MovieCard {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      //this.router.navigate(['/movies']);
+      this.router.navigate(['/movies']);
     });
   }
 }
