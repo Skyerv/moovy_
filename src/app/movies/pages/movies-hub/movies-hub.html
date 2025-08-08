@@ -20,8 +20,8 @@
 <div class="movies-grid">
   @if (resultMovies.length > 0 && lastSearchTerm.length >= 3) {
   <div class="movies-grid__header">
-    <h2>Resultados para "{{ lastSearchTerm }}"</h2>
-    <h1>{{ totalResults }} resultados encontrados</h1>
+    <h2>Results for "{{ lastSearchTerm }}"</h2>
+    <h1>{{ totalResults }} movies found.</h1>
   </div>
   <div class="search-movies-grid">
     @for (movie of resultMovies; track movie.id) {

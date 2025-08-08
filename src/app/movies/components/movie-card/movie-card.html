@@ -1,4 +1,4 @@
-<mat-card appearance="outlined" class="movie-card">
+<mat-card appearance="outlined" class="movie-card" (click)="openMovieDialog(movie.id)">
   <img mat-card-image [src]="movie.poster_full_url" [alt]="movie.title" />
 
   <mat-card-header>

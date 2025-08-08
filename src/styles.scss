@@ -78,3 +78,7 @@ body {
 .mat-mdc-select-arrow svg {
   fill: var(--accent0) !important;
 }
+
+button.mat-mdc-fab.mat-secondary mat-icon {
+  color: var(--accent2) !important;
+}
