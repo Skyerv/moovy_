@@ -11,6 +11,7 @@ import { MoviesRoutingModule } from './movies-routing.module';
 import { EffectsModule } from '@ngrx/effects';
 import { MoviesEffects } from './store/movies.effects';
 import { MovieCard } from './components/movie-card/movie-card';
+import { Carousel } from './components/carousel/carousel';
 
 @NgModule({
   declarations: [MoviesHub],
@@ -23,6 +24,7 @@ import { MovieCard } from './components/movie-card/movie-card';
     MaterialSharedModule,
     BrowserAnimationsModule,
     MovieCard,
+    Carousel,
   ],
 })
 export class MoviesModule {}

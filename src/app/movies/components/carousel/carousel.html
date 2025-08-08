@@ -1,0 +1,23 @@
+<div class="header-text">
+  <h1>Your movie searching - simplified!</h1>
+  <h3>Search for movies by name, actor, genre, and more.</h3>
+</div>
+
+@if (carouselMovies.length > 0) {
+<div class="carousel">
+  <div class="carousel-track" [style.transform]="getTransform()">
+    @for (movie of carouselMovies; track movie.id; let idx = $index) {
+    <div
+      class="carousel-slide"
+      [style.backgroundImage]="
+                movie.backdrop_path
+                  ? 'url(https://image.tmdb.org/t/p/original' + movie.backdrop_path + ')'
+                  : 'none'
+              "
+    ></div>
+    }
+  </div>
+</div>
+
+<div class="carousel-overlay"></div>
+}
