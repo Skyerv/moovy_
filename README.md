@@ -1,9 +1,7 @@
-# Moovy - Movie Explorer App
-
-## Overview
-
+# Moovy 
 Moovy is an Angular-based movie explorer app that lets you browse upcoming movies, popular movies by genre, and search for any movie. It uses The Movie Database (TMDb) API to fetch movie data and offers a smooth, responsive UI.
 
+![alt text](https://github.com/Skyerv/moovy_/blob/master/public/mockup.png?raw=true)
 ---
 
 ## 🚀 How to Run
