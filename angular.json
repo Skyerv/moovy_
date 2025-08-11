@@ -25,7 +25,7 @@
                 "glob": "**/*",
                 "input": "public"
               },
-               "src/assets"
+              "src/assets"
             ],
             "styles": [
               "src/styles.scss"
@@ -34,7 +34,10 @@
             "outputMode": "server",
             "ssr": {
               "entry": "src/server.ts"
-            }
+            },
+            "polyfills": [
+              "zone.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -76,8 +79,13 @@
           "builder": "@angular/build:extract-i18n"
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
+            "karmaConfig": "./karma.conf.js",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -88,7 +96,19 @@
             ],
             "styles": [
               "src/styles.scss"
-            ]
+            ],
+            "scripts": [],
+            "codeCoverage": true,
+            "codeCoverageExclude": [
+              "**/src/**/*.module.ts",
+              "**/src/**/*.routing.ts",
+              "**/src/**/*.reducer.ts",
+              "**/src/**/*.actions.ts",
+              "**/src/**/*.effects.ts",
+              "**/src/**/*.selectors.ts",
+              "**/src/**/*.interface.ts"
+            ],
+            "sourceMap": false
           }
         }
       }
