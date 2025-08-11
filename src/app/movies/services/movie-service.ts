@@ -76,7 +76,7 @@ export class MovieService {
       );
   }
 
-  getPopularMovies(page: number = 1) {
+  getPopularMovies(page: number = 1): Observable<MovieSearchResponse> {
     let params = new HttpParams()
       .set('api_key', this.apiKey)
       .set('language', this.language)

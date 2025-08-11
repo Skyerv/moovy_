@@ -35,7 +35,7 @@ export class MoviesHub {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChildren('genreRowRef') genreRows!: QueryList<ElementRef>;
 
-  private searchInput$ = new Subject<string>();
+  searchInput$ = new Subject<string>();
 
   searchQuery: MovieSearchQuery = createNewMovieSearchQuery();
   totalResults = 0;
